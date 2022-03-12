@@ -1,14 +1,22 @@
 import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+
 import LoginPage from './components/LoginPage/LoginPage'
-import Login from './components/LoginPage/LoginPage'
-import { Provider, useSelector } from 'react-redux'
-import store from './redux/store'
+import LogonPage from './components/LogonPage/LogonPage'
 import Chart from './components/Chart/Chart'
 
-function App() {
-  const logged = useSelector((state) => state.auth.islogged)
 
-  return <div>{logged ? <Chart /> : <LoginPage />}</div>
+
+function App() {
+  return (
+    <Routes>
+        <Route path='' element={<LoginPage />} />
+        <Route path='/Logon' element={<LogonPage />} />
+        <Route path='/Chart' element={<Chart />} />
+    </Routes>
+  )
+
 }
+
 
 export default App

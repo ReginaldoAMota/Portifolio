@@ -1,15 +1,23 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../redux/slices/auth'
 import { auth } from '../../utils/auth'
+import { useNavigate  } from 'react-router-dom';
 
 const LoginPage = () => {
   const logged = useSelector((state) => state.auth.islogged)
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
   const emailRef = useRef()
   const passwordRef = useRef()
+
+  useEffect(()=>{
+    if(logged){
+      navigate("/Chart");
+    }
+  },[logged])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -24,13 +32,14 @@ const LoginPage = () => {
         dispatch(login(userData.user))
       }
     } else {
+      alert("Os dados inseridos são inválidos")
     }
   }
   return (
     <>
       <Container>
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
-          Admin Login
+          Portifólio
         </h1>
         <Row className="mt-5">
           <Col
@@ -49,7 +58,7 @@ const LoginPage = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formBasicPassword">
+              <Form.Group controlId="formBasicPassword">  
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
@@ -61,9 +70,16 @@ const LoginPage = () => {
               <Button
                 variant="success btn-block"
                 type="submit"
-                onClick={handleSubmit}
+                onClick={(e) => handleSubmit(e)}
               >
                 Login
+              </Button>
+              <Button
+                variant="success btn-block"
+                type="submit"
+                onClick={()=> navigate("/Logon")}
+              >
+                Register
               </Button>
             </Form>
           </Col>
